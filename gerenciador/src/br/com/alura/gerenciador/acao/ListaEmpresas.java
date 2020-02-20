@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import br.com.alura.gerenciador.modelo.Banco;
 import br.com.alura.gerenciador.modelo.Empresa;
 
-public class ListaEmpresas {
+public class ListaEmpresas  implements Acao{
 
 	private static final String EMPRESAS = "empresas";
 	

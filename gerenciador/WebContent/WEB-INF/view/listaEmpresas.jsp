@@ -10,6 +10,12 @@
 <meta charset="UTF-8">
 </head>
 <body>
+	
+	Usuário logado: ${usuarioLogado.login} 
+	<br>
+	<br>
+	<br>
+	
 	<c:if test="${not empty empresa }">
 		Empresa ${ empresa } cadastrada com sucesso!
 	</c:if>

@@ -10,7 +10,9 @@
 <meta charset="UTF-8">
 </head>
 <body>
+	<c:import url="logout-parcial.jsp"/>
 	
+		
 	Usuário logado: ${usuarioLogado.login} 
 	<br>
 	<br>

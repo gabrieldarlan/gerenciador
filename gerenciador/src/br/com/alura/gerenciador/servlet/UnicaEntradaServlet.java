@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import br.com.alura.gerenciador.acao.Acao;
 
@@ -16,12 +17,15 @@ import br.com.alura.gerenciador.acao.Acao;
  */
 @WebServlet("/entrada")
 public class UnicaEntradaServlet extends HttpServlet {
+	private static final String LOGIN = "Login";
+	private static final String LOGIN_FORM = "LoginForm";
 	private static final String SEPARADOR = ":";
 	private static final String ACAO = "acao";
 	private static final String PACOTE_ACAO = "br.com.alura.gerenciador.acao.";
 	private static final String FORWARD = "forward";
 	private static final String WEB_INF_VIEW = "WEB-INF/view/";
 	private static final long serialVersionUID = 1L;
+	private static final String USUARIO_LOGADO = "usuarioLogado";
 
 	/**
 	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse
@@ -31,6 +35,16 @@ public class UnicaEntradaServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		String paramAcao = request.getParameter(ACAO);
+
+		HttpSession sessao = request.getSession();
+		boolean usuarioNaoEstaLogado = sessao.getAttribute(USUARIO_LOGADO) == null;
+		boolean ehUmaAcaoProtegida = !(paramAcao.equals(LOGIN) || paramAcao.equals(LOGIN_FORM));
+
+		if (ehUmaAcaoProtegida && usuarioNaoEstaLogado) {
+			response.sendRedirect("entrada?acao=LoginForm");
+			return;
+		}
+
 		String nomeDaClasse = PACOTE_ACAO + paramAcao;
 		String nome;
 
@@ -50,7 +64,5 @@ public class UnicaEntradaServlet extends HttpServlet {
 		} else {
 			response.sendRedirect(tipoEEndereco[1]);
 		}
-
 	}
-
 }

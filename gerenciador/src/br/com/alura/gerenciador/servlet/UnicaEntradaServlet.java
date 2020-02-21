@@ -32,8 +32,8 @@ public class UnicaEntradaServlet extends HttpServlet {
 
 		String paramAcao = request.getParameter(ACAO);
 		String nomeDaClasse = PACOTE_ACAO + paramAcao;
-		String nome ;
-		
+		String nome;
+
 		try {
 			Class<?> classe = Class.forName(nomeDaClasse); // carrega a classe com o nome
 			Acao acao = (Acao) classe.newInstance();

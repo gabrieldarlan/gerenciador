@@ -12,19 +12,23 @@ import br.com.alura.gerenciador.modelo.Usuario;
 
 public class Login implements Acao {
 
+	private static final String USUARIO_LOGADO = "usuarioLogado";
+	private static final String SENHA = "senha";
+	private static final String LOGIN = "login";
+
 	@Override
 	public String executa(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String login = request.getParameter("login");
-		String senha = request.getParameter("senha");
+		String login = request.getParameter(LOGIN);
+		String senha = request.getParameter(SENHA);
 
 		Banco banco = new Banco();
 		Usuario usuario = banco.existeUsuario(login, senha);
 
 		if (usuario != null) {
 			HttpSession sessao = request.getSession();
-			sessao.setAttribute("usuarioLogado", usuario);
+			sessao.setAttribute(USUARIO_LOGADO, usuario);
 			return "redirect:entrada?acao=ListaEmpresas";
 		} else {
 			return "redirect:entrada?acao=LoginForm";

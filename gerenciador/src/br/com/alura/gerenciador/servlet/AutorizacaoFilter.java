@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet Filter implementation class AutorizacaoFilter
  */
-@WebFilter("/entrada")
+//@WebFilter("/entrada")
 public class AutorizacaoFilter implements Filter {
 	private static final String USUARIO_LOGADO = "usuarioLogado";
 	private static final String LOGIN = "Login";
@@ -40,6 +40,7 @@ public class AutorizacaoFilter implements Filter {
 			response.sendRedirect("entrada?acao=LoginForm");
 			return;
 		}
+		
 		chain.doFilter(request, response);
 	}
 

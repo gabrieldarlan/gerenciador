@@ -21,21 +21,32 @@ public class EmpresasService extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		List<Empresa> empresas = new Banco().getEmpresas();
-			
-//		Gson gson = new Gson();
-//		String json = gson.toJson(empresas);
-//		
-//		response.setContentType("application/json");
-//		response.getWriter().print(json);
+
+		String valor = request.getHeader("Accept");
+
+		System.out.println(valor);
 		
-		XStream xStream = new XStream();
-		xStream.alias("empresa", Empresa.class);
-		String xml = xStream.toXML(empresas);
-		
-		response.setContentType("application/xml");
-		response.getWriter().print(xml);
+		System.out.println();
+		if (valor.contains("xml")) {
+			XStream xStream = new XStream();
+			xStream.alias("empresa", Empresa.class);
+			String xml = xStream.toXML(empresas);
+
+			response.setContentType("application/xml");
+			response.getWriter().print(xml);
+		} else if(valor.endsWith("json"))  {
+			Gson gson = new Gson();
+			String json = gson.toJson(empresas);
+
+			response.setContentType("application/json");
+			response.getWriter().print(json);
+		}else {
+			response.setContentType("application/json");
+			response.getWriter().print("{'message':no content}");
+		}
+
 	}
 
 }
